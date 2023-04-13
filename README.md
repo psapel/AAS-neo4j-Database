@@ -1,4 +1,4 @@
- First, itcreates a node labeled 'IMM' with a property asset set to 'IMM' and a relationship of type 'Equipped_with' to a node labeled 'Mold' with a property asset set to 'Mold'.
+ First, it creates a node labeled 'IMM' with a property asset set to 'IMM' and a relationship of type 'Equipped_with' to a node labeled 'Mold' with a property asset set to 'Mold'.
  The 'WITH *' statement passes all the results from the previous clause to the next clause.
  The next clasue is the 'WITH *' statement passes all the results from the previous clause to the next clause, which is a 'MATCH' statement. This statement retrieves the IMM node and the Mold node that are connected by the Equipped_with relationship, and assigns them to the variables imm and mold, respectively.
  The 'RETURN' statement returns the imm and mold nodes along with their labels, which should be ['IMM'] and ['Mold'], respectively.
