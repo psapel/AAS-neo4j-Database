@@ -2,7 +2,7 @@
 
 Graphical DB for enabling active AAS communication
 
-The DB consists of 2 nodes, labeled repsectivaly 'IMM' and 'Mold' amd a relationship between them of type 'Equipped with'. The 'IMM' node contains 2 properties, 'asset' that is set to 'IMM' and 'manufacturer' that is set to 'Arburg'. Similarly, the 'Mold' node contains 2 properties, 'asset' that is set to 'Mold' and 'name' that is set to 'SGO24'.
+The DB consists of 2 nodes, labeled repsectivaly 'IMM' and 'Mold' amd a relationship between them of type 'Equipped with'. The 'IMM' node contains the property 'asset' that is set to 'IMM'  and the 'Mold' node containsthe property 'asset' that is set to 'Mold'.
 
 The 'WITH *' clause passes all the results from the previous clause to the next clause.
 
