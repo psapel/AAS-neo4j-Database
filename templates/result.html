@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>{{ query_type }} Result</h1>
+
+    {% if query_type == 'Temperature Control Unit Query' %}
+        <table>
+            <tr>
+                <th>InquiryCoolant</th>
+                <th>Coolant Comparison</th>
+            </tr>
+            {% for record in data %}
+                <tr>
+                    <td>{{ record["InquiryCoolant"] }}</td>
+                    <td>
+                        {% for unit in record["MatchingControlUnits"] %}
+                            <p>Matched with: {{ unit["idShort"] }}</p>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% elif query_type == 'Handling Device Query' %}
+        <table>
+            <tr>
+                <th>InquiryHandlingDevice</th>
+                <th>Handling Device Comparison</th>
+            </tr>
+            {% for record in data %}
+                <tr>
+                    <td>{{ record["InquiryHandlingDevice"] }}</td>
+                    <td>
+                        {% for unit in record["MatchingControlUnits"] %}
+                            <p>Matched with: {{ unit["idShort"] }}</p>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% elif query_type == 'Injection Molding Machine Query' %}
+        <table>
+            <tr>
+                <th>Injection Molding Machine ID</th>
+                <th>Feasibility</th>
+            </tr>
+            {% for record in data %}
+                <tr>
+                    <td>{{ record["idShort"] }}</td>
+                    <td>{{ record["feasibility"] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
