@@ -247,6 +247,11 @@ WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
+// Exclude 'de' and 'en properties from the final result
+
+WITH n
+SET n = apoc.map.clean(n, ['de', 'en'], [])
+
 
 // TemperatureControlUnit_2
 
@@ -320,76 +325,11 @@ WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
-
-
-CALL apoc.load.json('http://localhost:51310/aas/HandlingDevice_2?format=json') YIELD value
-WITH value.AAS AS aas, value.Asset AS asset
-MERGE (n:HandlingDevice_2{idShort: asset.idShort})
-SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value]
+// Exclude 'de' and 'en properties from the final result
 
 WITH n
+SET n = apoc.map.clean(n, ['de', 'en'], [])
 
-CALL apoc.load.json('http://localhost:51310/aas/HandlingDevice_2/submodels/Nameplate/complete?format=json') YIELD value
-WITH value.submodelElements AS elements, n
-UNWIND elements AS element
-WITH n, element
-WHERE element.modelType.name = 'Property' OR element.modelType.name = 'MultiLanguageProperty'
-WITH n, element,
-  CASE
-    WHEN element.modelType.name = 'MultiLanguageProperty' THEN element.value.langString[0].text
-    ELSE element.value
-  END AS propertyValue
-SET n += apoc.map.fromPairs([[element.idShort, propertyValue]])
-
-WITH n
-
-CALL apoc.load.json('http://localhost:51310/aas/HandlingDevice_2/submodels/TechnicalData/complete?format=json') YIELD value
-WITH value.submodelElements AS elements, n
-UNWIND elements AS element
-WITH n, element,
-  CASE
-    WHEN element.modelType.name = 'Property' THEN [element]
-    ELSE []
-  END AS properties,
-  CASE
-    WHEN element.modelType.name = 'SubmodelElementCollection' THEN element.value
-    ELSE []
-  END AS subElements
-
-FOREACH (prop IN properties |
-  SET n += apoc.map.fromPairs([ [prop.idShort, prop.value] ])
-)
-FOREACH (subElem IN subElements |
-  FOREACH (_ IN CASE WHEN subElem.modelType.name = 'Property' THEN [1] ELSE [] END |
-    SET n += apoc.map.fromPairs([[subElem.idShort, subElem.value]])
-    FOREACH (desc IN subElem.descriptions |
-      SET n += apoc.map.fromPairs([ [desc.language, desc.text] ])
-    )
-  )
-  FOREACH (nestedSubElem IN CASE WHEN subElem.modelType.name = 'SubmodelElementCollection' THEN subElem.value ELSE [] END |
-    FOREACH (_ IN CASE WHEN nestedSubElem.modelType.name = 'Property' THEN [1] ELSE [] END |
-      SET n += apoc.map.fromPairs([[nestedSubElem.idShort, nestedSubElem.value]])
-      FOREACH (desc IN nestedSubElem.descriptions |
-        SET n += apoc.map.fromPairs([ [desc.language, desc.text] ])
-      )
-    )
-    FOREACH (deepNestedSubElem IN CASE WHEN nestedSubElem.modelType.name = 'SubmodelElementCollection' THEN nestedSubElem.value ELSE [] END |
-      SET n += apoc.map.fromPairs([[deepNestedSubElem.idShort, deepNestedSubElem.value]])
-        FOREACH (ts IN CASE WHEN deepNestedSubElem.idShort = 'TextStatement' THEN [deepNestedSubElem.value] ELSE [] END |
-    SET n += apoc.map.fromPairs([ ['TextStatement', ts] ])
-      )
-    )
-  )
-)
-
-WITH n
-
-MATCH (n)
-WHERE n.ManufacturerProductRoot IS NOT NULL
-MATCH (b)
-WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
-WITH n, b LIMIT 1
-CREATE (n)-[:IsA]->(b)
 
 
 // Mold
@@ -462,6 +402,11 @@ MATCH (b)
 WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
+
+// Exclude 'de' and 'en properties from the final result
+
+WITH n
+SET n = apoc.map.clean(n, ['de', 'en'], [])
 
 
 // Inquiry_1
@@ -568,6 +513,11 @@ WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
+// Exclude 'de' and 'en properties from the final result
+
+WITH n
+SET n = apoc.map.clean(n, ['de', 'en'], [])
+
 
 // HandlingDevice_1
 
@@ -641,6 +591,11 @@ WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
+// Exclude 'de' and 'en properties from the final result
+
+WITH n
+SET n = apoc.map.clean(n, ['de', 'en'], [])
+
 
 // HandlingDevice_2
 
@@ -713,6 +668,11 @@ MATCH (b)
 WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
+
+// Exclude 'de' and 'en properties from the final result
+
+WITH n
+SET n = apoc.map.clean(n, ['de', 'en'], [])
 
 
 // IMM_1
@@ -820,6 +780,11 @@ WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
+// Exclude 'de' and 'en properties from the final result
+
+WITH n
+SET n = apoc.map.clean(n, ['de', 'en'], [])
+
 
 // IMM_2
 
@@ -924,6 +889,11 @@ MATCH (b)
 WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
+
+// Exclude 'de' and 'en properties from the final result
+
+WITH n
+SET n = apoc.map.clean(n, ['de', 'en'], [])
 
 
 // IMM_3
@@ -1031,6 +1001,11 @@ WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
+// Exclude 'de' and 'en properties from the final result
+
+WITH n
+SET n = apoc.map.clean(n, ['de', 'en'], [])
+
 
 // IMM_4
 
@@ -1135,6 +1110,11 @@ MATCH (b)
 WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
+
+// Exclude 'de' and 'en properties from the final result
+
+WITH n
+SET n = apoc.map.clean(n, ['de', 'en'], [])
 
 
 // Retrieve and return all nodes from the graph database without any specific filtering or conditions
