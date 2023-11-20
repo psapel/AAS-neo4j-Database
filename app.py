@@ -5,6 +5,8 @@ from py2neo import Graph
 
 app = Flask(__name__)
 
+load_dotenv()
+
 neo4j_uri = "bolt://localhost:7687"
 neo4j_username = "neo4j"
 neo4j_password = "engx1494"
@@ -81,5 +83,5 @@ def run_query3():
     return render_template('result.html', data=result, query_type='Injection Molding Machine Query')
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True)
 
