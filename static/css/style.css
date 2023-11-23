@@ -5,8 +5,8 @@ body, h1, h2, p, table {
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Calibri';
+    background-color: rgb(232, 235, 237);
     color: #333;
 }
 
@@ -18,7 +18,7 @@ body {
 h1 {
     text-align: center;
     padding: 20px 0;
-    background-color: #4285f4;
+    background-color: rgb(149,187,32);
     color: #fff;
 }
 
@@ -32,7 +32,7 @@ button {
     width: 250px; /* Set a fixed width for the buttons */
     padding: 20px; /* Adjust padding for increased size */
     font-size: 18px; /* Adjust font size for increased size */
-    background-color: #4285f4;
+    background-color: rgb(0,53,78);
     color: #fff;
     border: none;
     cursor: pointer;
@@ -40,7 +40,7 @@ button {
 }
 
 button:hover {
-    background-color: #2d68c4;
+    background-color: rgb(0,53,78);
 }
 
 table {
@@ -57,7 +57,7 @@ th, td {
 }
 
 th {
-    background-color: #a5c6f9;
+    background-color: rgb(0,53,78);
     color: #fff;
 }
 
