@@ -13,8 +13,8 @@ def run_injection_molding_machine_query(graph):
       (inquiry.RequiredOpeningStroke <= imm.MaxOpeningStroke) AS OK5
     RETURN imm.idShort AS idShort,
       CASE
-        WHEN OK1 AND OK2 AND OK3 AND OK4 AND OK5 THEN 'is technically feasible'
-        ELSE 'is not technically feasible'
+        WHEN OK1 AND OK2 AND OK3 AND OK4 AND OK5 THEN 'is technically capable'
+        ELSE 'is not technically capable'
       END AS feasibility
     """
 
