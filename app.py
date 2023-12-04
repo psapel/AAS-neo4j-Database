@@ -1,27 +1,26 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template
 from dotenv import load_dotenv
-from neo4j import GraphDatabase
 from py2neo import Graph
 
-from queries.coolant_query import get_coolant_data
-from queries.handling_device_query import get_handling_device_data
-from queries.injection_molding_machine_query import run_injection_molding_machine_query
-
 app = Flask(__name__)
-
+ 
 load_dotenv()
 
+# Neo4j configuration
 neo4j_uri = "bolt://localhost:7687"
 neo4j_username = "neo4j"
 neo4j_password = "engx1494"
 
 graph = Graph(neo4j_uri, auth=(neo4j_username, neo4j_password))
 
-
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# Import queries from the local folder
+from queries.coolant_query import get_coolant_data
+from queries.handling_device_query import get_handling_device_data
+from queries.injection_molding_machine_query import run_injection_molding_machine_query
 
 @app.route('/query1', methods=['POST'])
 def run_query1():
@@ -40,4 +39,3 @@ def run_query3():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
