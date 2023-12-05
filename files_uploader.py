@@ -21,7 +21,7 @@ def main():
     bucket_name = "query-bucket"
 
     for file_name in os.listdir(folder_path):
-        if file_name.endswith(".py"):  # Filter only Python files
+        if file_name.endswith(".py"): 
             file_path = os.path.join(folder_path, file_name)
             object_name = file_name
             upload_file(file_path, bucket_name, object_name)
