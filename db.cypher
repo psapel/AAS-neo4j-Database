@@ -172,7 +172,7 @@ MERGE (o)-[:isProcesseBy]->(td)
 
 // The following queries fetch and structure data for some nodes in the graph db, 
 including their submodels and technical details, 
-and link them to a 'ManufacturerProductRoot' node if they share the same "idShort" property.
+and link them to a 'derivedFrom' node if they share the same property.
 
 
 //TemperatureControlUnit_1
@@ -195,7 +195,8 @@ WITH n, element,
     WHEN element.modelType.name = 'MultiLanguageProperty' THEN element.value.langString[0].text
     ELSE element.value
   END AS propertyValue
-SET n += apoc.map.fromPairs([[element.idShort, propertyValue]])
+SET n += apoc.map.fromPairs([[element.idShort, propertyValue]]),
+n.derivedFrom = aas.derivedFrom.keys[0].value
 
 WITH n
 
@@ -241,9 +242,9 @@ FOREACH (subElem IN subElements |
 WITH n
 
 MATCH (n)
-WHERE n.ManufacturerProductRoot IS NOT NULL
+WHERE n.derivedFrom IS NOT NULL
 MATCH (b)
-WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
+WHERE b.idS IS NOT NULL AND n.derivedFrom = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
@@ -259,7 +260,8 @@ SET n = apoc.map.clean(n, ['de', 'en'], [])
 CALL apoc.load.json('http://localhost:51310/aas/TemperatureControlUnit_2?format=json') YIELD value
 WITH value.AAS AS aas, value.Asset AS asset
 MERGE (n:TemperatureControlUnit_2{idShort: asset.idShort})
-SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value]
+SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value],
+n.derivedFrom = aas.derivedFrom.keys[0].value
 
 WITH n
 
@@ -319,9 +321,9 @@ FOREACH (subElem IN subElements |
 WITH n
 
 MATCH (n)
-WHERE n.ManufacturerProductRoot IS NOT NULL
+WHERE n.derivedFrom IS NOT NULL
 MATCH (b)
-WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
+WHERE b.idS IS NOT NULL AND n.derivedFrom = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
@@ -337,7 +339,8 @@ SET n = apoc.map.clean(n, ['de', 'en'], [])
 CALL apoc.load.json('http://localhost:51310/aas/Mold?format=json') YIELD value
 WITH value.AAS AS aas, value.Asset AS asset
 MERGE (n:Mold_1{idShort: asset.idShort})
-SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value]
+SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value],
+n.derivedFrom = aas.derivedFrom.keys[0].value
 
 WITH n
 
@@ -397,9 +400,9 @@ FOREACH (subElem IN subElements |
 WITH n
 
 MATCH (n)
-WHERE n.ManufacturerProductRoot IS NOT NULL
+WHERE n.derivedFrom IS NOT NULL
 MATCH (b)
-WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
+WHERE b.idS IS NOT NULL AND n.derivedFrom = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
@@ -414,7 +417,8 @@ SET n = apoc.map.clean(n, ['de', 'en'], [])
 CALL apoc.load.json('http://localhost:51310/aas/Inquiry_1?format=json') YIELD value
 WITH value.AAS AS aas, value.Asset AS asset
 MERGE (n:Inquiry_1{idShort: asset.idShort})
-SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value]
+SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value],
+n.derivedFrom = aas.derivedFrom.keys[0].value
 
 WITH n
 
@@ -507,9 +511,9 @@ FOREACH (subElem IN subElements |
 WITH n
 
 MATCH (n)
-WHERE n.ManufacturerProductRoot IS NOT NULL
+WHERE n.derivedFrom IS NOT NULL
 MATCH (b)
-WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
+WHERE b.idS IS NOT NULL AND n.derivedFrom = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
@@ -525,7 +529,8 @@ SET n = apoc.map.clean(n, ['de', 'en'], [])
 CALL apoc.load.json('http://localhost:51310/aas/HandlingDevice_1?format=json') YIELD value
 WITH value.AAS AS aas, value.Asset AS asset
 MERGE (n:HandlingDevice_1{idShort: asset.idShort})
-SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value]
+SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value],
+n.derivedFrom = aas.derivedFrom.keys[0].value
 
 WITH n
 
@@ -585,9 +590,9 @@ FOREACH (subElem IN subElements |
 WITH n
 
 MATCH (n)
-WHERE n.ManufacturerProductRoot IS NOT NULL
+WHERE n.derivedFrom IS NOT NULL
 MATCH (b)
-WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
+WHERE b.idS IS NOT NULL AND n.derivedFrom = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
@@ -603,7 +608,8 @@ SET n = apoc.map.clean(n, ['de', 'en'], [])
 CALL apoc.load.json('http://localhost:51310/aas/HandlingDevice_2?format=json') YIELD value
 WITH value.AAS AS aas, value.Asset AS asset
 MERGE (n:HandlingDevice_2{idShort: asset.idShort})
-SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value]
+SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value],
+n.derivedFrom = aas.derivedFrom.keys[0].value
 
 WITH n
 
@@ -663,9 +669,9 @@ FOREACH (subElem IN subElements |
 WITH n
 
 MATCH (n)
-WHERE n.ManufacturerProductRoot IS NOT NULL
+WHERE n.derivedFrom IS NOT NULL
 MATCH (b)
-WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
+WHERE b.idS IS NOT NULL AND n.derivedFrom = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
@@ -681,7 +687,8 @@ SET n = apoc.map.clean(n, ['de', 'en'], [])
 CALL apoc.load.json('http://localhost:51310/aas/IMM_1?format=json') YIELD value
 WITH value.AAS AS aas, value.Asset AS asset
 MERGE (n:InjectionMoldingMachine_1{idShort: asset.idShort})
-SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value]
+SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value],
+n.derivedFrom = aas.derivedFrom.keys[0].value
 
 WITH n
 
@@ -774,9 +781,9 @@ FOREACH (subElem IN subElements |
 WITH n
 
 MATCH (n)
-WHERE n.ManufacturerProductRoot IS NOT NULL
+WHERE n.derivedFrom IS NOT NULL
 MATCH (b)
-WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
+WHERE b.idS IS NOT NULL AND n.derivedFrom = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
@@ -791,7 +798,8 @@ SET n = apoc.map.clean(n, ['de', 'en'], [])
 CALL apoc.load.json('http://localhost:51310/aas/IMM_2?format=json') YIELD value
 WITH value.AAS AS aas, value.Asset AS asset
 MERGE (n:InjectionMoldingMachine_2{idShort: asset.idShort})
-SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value]
+SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value],
+n.derivedFrom = aas.derivedFrom.keys[0].value
 
 WITH n
 
@@ -884,9 +892,9 @@ FOREACH (subElem IN subElements |
 WITH n
 
 MATCH (n)
-WHERE n.ManufacturerProductRoot IS NOT NULL
+WHERE n.derivedFrom IS NOT NULL
 MATCH (b)
-WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
+WHERE b.idS IS NOT NULL AND n.derivedFrom = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
@@ -902,7 +910,8 @@ SET n = apoc.map.clean(n, ['de', 'en'], [])
 CALL apoc.load.json('http://localhost:51310/aas/IMM_3?format=json') YIELD value
 WITH value.AAS AS aas, value.Asset AS asset
 MERGE (n:InjectionMoldingMachine_3{idShort: asset.idShort})
-SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value]
+SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value],
+n.derivedFrom = aas.derivedFrom.keys[0].value
 
 WITH n
 
@@ -995,9 +1004,9 @@ FOREACH (subElem IN subElements |
 WITH n
 
 MATCH (n)
-WHERE n.ManufacturerProductRoot IS NOT NULL
+WHERE n.derivedFrom IS NOT NULL
 MATCH (b)
-WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
+WHERE b.idS IS NOT NULL AND n.derivedFrom = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
@@ -1012,7 +1021,8 @@ SET n = apoc.map.clean(n, ['de', 'en'], [])
 CALL apoc.load.json('http://localhost:51310/aas/IMM_4?format=json') YIELD value
 WITH value.AAS AS aas, value.Asset AS asset
 MERGE (n:InjectionMoldingMachine_4{idShort: asset.idShort})
-SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value]
+SET n.submodels = [submodel IN aas.submodels | submodel.keys[0].value],
+n.derivedFrom = aas.derivedFrom.keys[0].value
 
 WITH n
 
@@ -1105,9 +1115,9 @@ FOREACH (subElem IN subElements |
 WITH n
 
 MATCH (n)
-WHERE n.ManufacturerProductRoot IS NOT NULL
+WHERE n.derivedFrom IS NOT NULL
 MATCH (b)
-WHERE b.idS IS NOT NULL AND n.ManufacturerProductRoot = b.idS
+WHERE b.idS IS NOT NULL AND n.derivedFrom = b.idS
 WITH n, b LIMIT 1
 CREATE (n)-[:IsA]->(b)
 
