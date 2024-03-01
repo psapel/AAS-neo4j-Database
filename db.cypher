@@ -59,7 +59,7 @@ SET inq.idS = 'Inquiry'
 MERGE (inq)-[:checksTechnicalFeasibility]->(ta)
 
 MERGE (sd:SalesDocument)
-SET sd.caption = 'SalesDOcument'
+SET sd.caption = 'SalesDocument'
 
 MERGE (inq)-[:isA]->(sd)
 
