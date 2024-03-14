@@ -1,5 +1,10 @@
 // Creates a graph database schema 
 
+// Don't run the query as a whole because it's very big and
+// Neo4j throws a timeout error.
+// First, execute the db and then each newly added node individually.
+
+
 MERGE (m:Mold)
 SET m.caption = 'Mold'
 SET m.idS = 'Mold'
