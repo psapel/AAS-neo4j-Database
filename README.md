@@ -1,5 +1,4 @@
 # AAS-neo4j-Database
-Graphical DB for enabling active AAS communication
+Graphic DB for enabling active AAS communication
 
-
-see DocumentationNeo4j.pdf
+See DocumentationNeo4j.pdf
